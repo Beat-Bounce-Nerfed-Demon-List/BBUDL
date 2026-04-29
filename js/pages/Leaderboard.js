@@ -29,7 +29,7 @@ export default {
                         <tr v-for="(ientry, i) in leaderboard">
                             <td class="rank">
                                 <p class="type-label-lg">
-  <span v-if="ientry.user === 'Thinking Space II'"></span>
+  <span v-if="ientry.user === 'E T V'"></span>
   <span v-else>#{{ getAdjustedRank(i) }}</span>
 </p>
                             </td>
