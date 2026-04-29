@@ -28,7 +28,10 @@ export default {
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
                             <td class="rank">
-                                <p class="type-label-lg">#{{ i + 1 }}</p>
+                                <p class="type-label-lg">
+  <span v-if="ientry.user === 'Thinking Space II'"></span>
+  <span v-else>#{{ getAdjustedRank(i) }}</span>
+</p>
                             </td>
                             <td class="total">
                                 <p class="type-label-lg">{{ localize(ientry.total) }}</p>
