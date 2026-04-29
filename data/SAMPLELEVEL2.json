@@ -1,11 +1,11 @@
 {
     "id": 2363643,
     "name": "TERRY Unverified",
-    "author": "xoliver",
-    "creators": [],
+    "author": "Xoliver",
+    "creators": ["Xoliver"],
     "verifier": "Open Verifcation",
-    "verification": "https://www.youtube.com/watch?v=ISTl28wKSXc",
-    "percentToQualify": "10",
+    "Showcase": "https://www.youtube.com/watch?v=Rl8U9lmFiKw",
+    "percentToQualify": "16",
     "records": [
     ]
 }
