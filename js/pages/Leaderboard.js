@@ -17,104 +17,139 @@ export default {
         <main v-if="loading">
             <Spinner></Spinner>
         </main>
+
         <main v-else class="page-leaderboard-container">
             <div class="page-leaderboard">
+
                 <div class="error-container">
                     <p class="error" v-if="err.length > 0">
                         Leaderboard may be incorrect, as the following levels could not be loaded: {{ err.join(', ') }}
                     </p>
                 </div>
+
                 <div class="board-container">
                     <table class="board">
-                        <tr v-for="(ientry, i) in leaderboard">
+                        <tr v-for="(ientry, i) in leaderboard" :key="i">
+
                             <td class="rank">
-                                getAdjustedRank(index) {
-    const skippedIndex = this.leaderboard.findIndex(
-        e => e.user === "E T V"
-    );
-
-    if (skippedIndex === -1) {
-        return index + 1;
-    }
-
-    return index < skippedIndex ? index + 1 : index;
-}
+                                <p class="type-label-lg">
+                                    #{{ getAdjustedRank(i) }}
+                                </p>
                             </td>
+
                             <td class="total">
                                 <p class="type-label-lg">{{ localize(ientry.total) }}</p>
                             </td>
+
                             <td class="user" :class="{ 'active': selected == i }">
                                 <button @click="selected = i">
                                     <span class="type-label-lg">{{ ientry.user }}</span>
                                 </button>
                             </td>
+
                         </tr>
                     </table>
                 </div>
+
                 <div class="player-container">
                     <div class="player">
+
                         <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
                         <h3>{{ entry.total }}</h3>
-                        <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length}})</h2>
+
+                        <h2 v-if="entry.verified.length > 0">
+                            Verified ({{ entry.verified.length }})
+                        </h2>
+
                         <table class="table">
-                            <tr v-for="score in entry.verified">
+                            <tr v-for="score in entry.verified" :key="score.level">
                                 <td class="rank">
                                     <p>#{{ score.rank }}</p>
                                 </td>
                                 <td class="level">
-                                    <a class="type-label-lg" target="_blank" :href="score.link">{{ score.level }}</a>
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.level }}
+                                    </a>
                                 </td>
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
                                 </td>
                             </tr>
                         </table>
-                        <h2 v-if="entry.completed.length > 0">Completed ({{ entry.completed.length }})</h2>
+
+                        <h2 v-if="entry.completed.length > 0">
+                            Completed ({{ entry.completed.length }})
+                        </h2>
+
                         <table class="table">
-                            <tr v-for="score in entry.completed">
+                            <tr v-for="score in entry.completed" :key="score.level">
                                 <td class="rank">
                                     <p>#{{ score.rank }}</p>
                                 </td>
                                 <td class="level">
-                                    <a class="type-label-lg" target="_blank" :href="score.link">{{ score.level }}</a>
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.level }}
+                                    </a>
                                 </td>
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
                                 </td>
                             </tr>
                         </table>
-                        <h2 v-if="entry.progressed.length > 0">Progressed ({{entry.progressed.length}})</h2>
+
+                        <h2 v-if="entry.progressed.length > 0">
+                            Progressed ({{ entry.progressed.length }})
+                        </h2>
+
                         <table class="table">
-                            <tr v-for="score in entry.progressed">
+                            <tr v-for="score in entry.progressed" :key="score.level">
                                 <td class="rank">
                                     <p>#{{ score.rank }}</p>
                                 </td>
                                 <td class="level">
-                                    <a class="type-label-lg" target="_blank" :href="score.link">{{ score.percent }}% {{ score.level }}</a>
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.percent }}% {{ score.level }}
+                                    </a>
                                 </td>
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
                                 </td>
                             </tr>
                         </table>
+
                     </div>
                 </div>
+
             </div>
         </main>
     `,
+
     computed: {
         entry() {
             return this.leaderboard[this.selected];
         },
     },
+
     async mounted() {
         const [leaderboard, err] = await fetchLeaderboard();
         this.leaderboard = leaderboard;
         this.err = err;
-        // Hide loading spinner
         this.loading = false;
     },
+
     methods: {
         localize,
+
+        getAdjustedRank(index) {
+            const skippedIndex = this.leaderboard.findIndex(
+                e => e.user === "E T V"
+            );
+
+            if (skippedIndex === -1) {
+                return index + 1;
+            }
+
+            return index < skippedIndex ? index + 1 : index;
+        },
     },
 };
