@@ -13,6 +13,7 @@ export default {
         selected: 0,
         err: [],
     }),
+
     template: `
         <main v-if="loading">
             <Spinner></Spinner>
@@ -145,14 +146,19 @@ export default {
 
             let rank = 0;
 
-            for (let i = 0; i <= index; i++) {
+            for (let i = 0; i < this.leaderboard.length; i++) {
                 const user = this.leaderboard[i].user;
-                if (!ignoredUsers.has(user)) {
-                    rank++;
+
+                if (ignoredUsers.has(user)) continue;
+
+                rank++;
+
+                if (i === index) {
+                    return rank;
                 }
             }
 
-            return rank;
+            return null;
         },
     },
 };
