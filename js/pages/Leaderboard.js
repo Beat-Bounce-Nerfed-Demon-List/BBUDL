@@ -28,10 +28,17 @@ export default {
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard">
                             <td class="rank">
-                                <p class="type-label-lg">
-  <span v-if="ientry.user === 'E T V'"></span>
-  <span v-else>#{{ getAdjustedRank(i) }}</span>
-</p>
+                                getAdjustedRank(index) {
+    const skippedIndex = this.leaderboard.findIndex(
+        e => e.user === "E T V"
+    );
+
+    if (skippedIndex === -1) {
+        return index + 1;
+    }
+
+    return index < skippedIndex ? index + 1 : index;
+}
                             </td>
                             <td class="total">
                                 <p class="type-label-lg">{{ localize(ientry.total) }}</p>
