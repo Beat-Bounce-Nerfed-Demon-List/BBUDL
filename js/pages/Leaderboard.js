@@ -7,6 +7,7 @@ export default {
     components: {
         Spinner,
     },
+
     data: () => ({
         leaderboard: [],
         loading: true,
@@ -30,11 +31,12 @@ export default {
 
                 <div class="board-container">
                     <table class="board">
+
                         <tr v-for="(ientry, i) in leaderboard" :key="i">
 
                             <td class="rank">
                                 <p class="type-label-lg">
-                                    #{{ getAdjustedRank(i) }}
+                                    #{{ getRank(ientry.user) }}
                                 </p>
                             </td>
 
@@ -49,13 +51,20 @@ export default {
                             </td>
 
                         </tr>
+
                     </table>
                 </div>
 
                 <div class="player-container">
                     <div class="player">
 
-                        <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
+                        <h1>
+                            <span v-if="getRank(entry.user)">
+                                #{{ getRank(entry.user) }}
+                            </span>
+                            {{ entry.user }}
+                        </h1>
+
                         <h3>{{ entry.total }}</h3>
 
                         <h2 v-if="entry.verified.length > 0">
@@ -64,9 +73,7 @@ export default {
 
                         <table class="table">
                             <tr v-for="score in entry.verified" :key="score.level">
-                                <td class="rank">
-                                    <p>#{{ score.rank }}</p>
-                                </td>
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
                                 <td class="level">
                                     <a class="type-label-lg" target="_blank" :href="score.link">
                                         {{ score.level }}
@@ -84,9 +91,7 @@ export default {
 
                         <table class="table">
                             <tr v-for="score in entry.completed" :key="score.level">
-                                <td class="rank">
-                                    <p>#{{ score.rank }}</p>
-                                </td>
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
                                 <td class="level">
                                     <a class="type-label-lg" target="_blank" :href="score.link">
                                         {{ score.level }}
@@ -104,9 +109,7 @@ export default {
 
                         <table class="table">
                             <tr v-for="score in entry.progressed" :key="score.level">
-                                <td class="rank">
-                                    <p>#{{ score.rank }}</p>
-                                </td>
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
                                 <td class="level">
                                     <a class="type-label-lg" target="_blank" :href="score.link">
                                         {{ score.percent }}% {{ score.level }}
@@ -129,6 +132,16 @@ export default {
         entry() {
             return this.leaderboard[this.selected];
         },
+
+        // precomputed ranked list (IGNORES E T V)
+        rankedUsers() {
+            return this.leaderboard
+                .filter(e => e.user !== "E T V")
+                .map((e, i) => ({
+                    user: e.user,
+                    rank: i + 1
+                }));
+        },
     },
 
     async mounted() {
@@ -141,24 +154,11 @@ export default {
     methods: {
         localize,
 
-        getAdjustedRank(index) {
-            const ignoredUsers = new Set(["E T V"]);
+        getRank(user) {
+            if (user === "E T V") return null;
 
-            let rank = 0;
-
-            for (let i = 0; i < this.leaderboard.length; i++) {
-                const user = this.leaderboard[i].user;
-
-                if (ignoredUsers.has(user)) continue;
-
-                rank++;
-
-                if (i === index) {
-                    return rank;
-                }
-            }
-
-            return null;
+            const entry = this.rankedUsers.find(e => e.user === user);
+            return entry ? entry.rank : null;
         },
     },
 };
