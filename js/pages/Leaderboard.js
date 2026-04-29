@@ -141,15 +141,18 @@ export default {
         localize,
 
         getAdjustedRank(index) {
-            const skippedIndex = this.leaderboard.findIndex(
-                e => e.user === "E T V"
-            );
+            const ignoredUsers = new Set(["E T V"]);
 
-            if (skippedIndex === -1) {
-                return index + 1;
+            let rank = 0;
+
+            for (let i = 0; i <= index; i++) {
+                const user = this.leaderboard[i].user;
+                if (!ignoredUsers.has(user)) {
+                    rank++;
+                }
             }
 
-            return index < skippedIndex ? index + 1 : index;
+            return rank;
         },
     },
 };
