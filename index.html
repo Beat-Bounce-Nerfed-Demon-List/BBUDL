@@ -3,10 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=1024" />
-        <title>Beat Bounce Unrated Demon List</title>
-
-        <!-- Replace your server icon by uploading an image file named "list_icon.png"-->
-        <link rel="icon" href="/list_icon.png" />
+        <title>Unrated Demons List</title>
+        <link rel="icon" href="assets/gdud.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -25,11 +23,7 @@
         <link rel="stylesheet" type="text/css" href="/css/pages/roulette.css" />
         <link rel="stylesheet" type="text/css" href="/css/components/nav.css" />
         <link rel="stylesheet" type="text/css" href="/css/components/btn.css" />
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="/css/components/tabs.css"
-        />
+        <link rel="stylesheet" type="text/css" href="/css/components/tabs.css" />
         <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.js"></script>
         <script src="https://unpkg.com/vue-router@4.0.14/dist/vue-router.global.prod.js"></script>
         <script type="module" src="/js/main.js"></script>
@@ -37,8 +31,9 @@
     <body id="app">
         <header :class="{ dark: store.dark }">
             <div class="logo">
-                <h2>BBUDL</h2>
-                <p>v1.0.2</p>
+                <img src="assets/gdud.png" style="height:3rem;margin-top:0.5rem;">
+                <h2 style="line-height:4rem;">UDL</h2>
+                <p style="line-height:4rem;">v8.0.0</p>
             </div>
             <nav class="nav">
                 <router-link class="nav__tab" to="/">
@@ -60,14 +55,12 @@
                             alt=""
                         />
                     </button>
-                    <!-- Replace the '#' with your discord server's invite-->
-                    <a class="nav__icon" href="#">
+                    <a class="nav__icon"">
                         <img src="/assets/discord.svg" alt="Discord Logo" />
                     </a>
-                    <!-- List record submission form, add a link to replace the '#' when putting a link to your list submission form-->
                     <a
                         class="nav__cta type-label-lg"
-                        href="#"
+                        href=""
                         target="_blank"
                         >Submit Record</a
                     >
